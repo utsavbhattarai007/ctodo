@@ -11,11 +11,11 @@ rem Check if the executable already exists in the installation directory
 if exist "%install_dir%\ctodo.exe" (
     echo Replacing existing executable...
     cd ..
-    copy /Y ctodo.exe "%install_dir%"
+    copy /Y ctodo "%install_dir%"
 ) else (
     echo Installing new executable...
     cd ..
-    copy ctodo.exe "%install_dir%"
+    copy ctodo "%install_dir%"
 )
 
 rem Add the installation directory to the user PATH if not already included
