@@ -22,4 +22,4 @@ rem Add the installation directory to the user PATH if not already included
 setx PATH "%install_dir%;%PATH%" /m
 
 
-echo Configuration completed. 'ctodo' is now available globally.
+echo Configuration completed. 'ctodo' is now available globally
