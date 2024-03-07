@@ -6,9 +6,11 @@ install_dir="/usr/local/bin"
 # Check if the executable already exists in the installation directory
 if [ -f "$install_dir/ctodo" ]; then
     echo "Replacing existing executable..."
+    cd ..
     sudo cp -f ctodo "$install_dir"
 else
     echo "Installing new executable..."
+    cd ..
     sudo cp ctodo "$install_dir"
 fi
 

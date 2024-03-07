@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     }
 
     // Print a greeting message with the provided name
-    printf("Hello %s!, Program is under-developement", argv[1]);
+    printf("Hi %s!, Program is under-developement", argv[1]);
 
     return 0; // Return success
 }
