@@ -1,2 +1,2 @@
-#Ctodo
+# Ctodo
 This is cross-platform todo application
