@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include <curl/curl.h>
 
 #define MAX_TASKS 100
 #define MAX_TASK_LENGTH 100
@@ -32,10 +33,14 @@ int num_tasks = 0;
 void addTask(const char *des);
 void deleteTask(int index);
 void markDone(int index);
-void listTasks();
+void markUndone(int index);
+void listTasks(bool showTime);
 void printUsage();
 void loadTasks();
 void saveTasks();
+void user();
+void aboutus();
+int login(const char *apikey);
 
 int main(int argc, char *argv[])
 {
@@ -46,6 +51,13 @@ int main(int argc, char *argv[])
         return 1; // Return an error code
     }
     loadTasks();
+
+    bool showTime = false;
+
+    if (argc == 3 && strcmp(argv[1], "list") == 0 && strcmp(argv[2], "-t") == 0)
+    {
+        showTime = true;
+    }
 
     if (strcmp(argv[1], "add") == 0)
     {
@@ -74,9 +86,46 @@ int main(int argc, char *argv[])
         int index = atoi(argv[2]);
         deleteTask(index);
     }
+    else if (strcmp(argv[1], "undone") == 0)
+    {
+        if (argc != 3)
+        {
+            printf("\n%sError: Invalid arguments for undone command%s\n", BOLD, RESET);
+            printUsage();
+            return 1;
+        }
+        int index = atoi(argv[2]);
+        markUndone(index);
+    }
+    else if (strcmp(argv[1], "login") == 0)
+    {
+        if (argc < 2)
+        {
+            printf("\n%sError: Invalid arguments for login command%s\n", BOLD, RESET);
+            printUsage();
+            return 1;
+        }
+        char apikey[100];
+        printf("Enter the API key: ");
+        scanf("%s", apikey);
+        system("clear");
+        login(apikey) ? printf("\n%sLogin failed%s\n", RED, RESET) : printf("\n%sLogin successful%s\n", GREEN, RESET);
+    }
+    else if (strcmp(argv[1], "user") == 0)
+    {
+        user();
+    }
+    else if (strcmp(argv[1], "aboutus") == 0)
+    {
+        aboutus();
+    }
+    else if (strcmp(argv[1], "help") == 0)
+    {
+        printUsage();
+    }
     else if (strcmp(argv[1], "list") == 0)
     {
-        listTasks();
+        listTasks(showTime);
     }
     else if (strcmp(argv[1], "done") == 0)
     {
@@ -142,7 +191,7 @@ void deleteTask(int index)
 }
 
 // Function to list all tasks
-void listTasks()
+void listTasks(bool showTime)
 {
     if (num_tasks == 0)
     {
@@ -155,12 +204,18 @@ void listTasks()
     {
         char dateStr[26];
         strftime(dateStr, sizeof(dateStr), "%Y-%m-%d %H:%M:%S", localtime(&tasks[i].createdAt));
-        printf("\n%d. %s[%c]%s %s - Created at: %s", i + 1, tasks[i].status ? LIGHT_GREEN : "", tasks[i].status ? 'X' : ' ', RESET, tasks[i].des, dateStr);
-        if (tasks[i].status && tasks[i].completedAt != 0)
+        printf("\n%d. [%s%c%s] %s", i + 1, tasks[i].status ? LIGHT_GREEN : "", tasks[i].status ? 'X' : ' ', RESET, tasks[i].des);
+
+        if (showTime)
         {
-            strftime(dateStr, sizeof(dateStr), "%Y-%m-%d %H:%M:%S", localtime(&tasks[i].completedAt));
-            printf(", Completed at: %s", dateStr);
+            printf(" - Created at: %s", dateStr);
+            if (tasks[i].status && tasks[i].completedAt != 0)
+            {
+                strftime(dateStr, sizeof(dateStr), "%Y-%m-%d %H:%M:%S", localtime(&tasks[i].completedAt));
+                printf(", Completed at: %s", dateStr);
+            }
         }
+
         printf("\n");
     }
 }
@@ -189,7 +244,7 @@ void saveTasks()
     FILE *file = fopen(FILENAME, "w");
     if (file == NULL)
     {
-        printf("%sError: Failed to open file for writing%s\n", RED, RESET);
+        printf("Error: Failed to open file for saving tasks.\n");
         return;
     }
 
@@ -210,7 +265,7 @@ void printUsage()
     printf("  add <description>    Add a new task\n");
     printf("  delete <index>       Delete the task at the specified index\n");
     printf("  done <index>         Update the status of the task at the specified index\n");
-    printf("  list                 List all tasks\n");
+    printf("  list [-t]            List all tasks\n");
     printf("  user                 Fetch the user details\n");
     printf("  help                 Print usage\n");
 }
@@ -227,4 +282,30 @@ void markDone(int index)
     tasks[index - 1].status = true;
     tasks[index - 1].completedAt = time(NULL);
     printf("\n%sTask marked as done.%s\n", GREEN, RESET);
+}
+
+void markUndone(int index){
+    if (index < 1 || index > num_tasks)
+    {
+        printf("Error: Invalid task index.\n");
+        return;
+    }
+
+    tasks[index - 1].status = false;
+    tasks[index - 1].completedAt = 0;
+    printf("\n%sTask marked as undone.%s\n", GREEN, RESET);
+
+}
+
+void user()
+{
+    // Get the user Data
+}
+
+void aboutus()
+{
+    printf("\n📝 %sWelcome to Ctodo - Your Command Line Todo App%s \n",BOLD,RESET);
+    printf("\nVersion: 1.0 \n");
+    printf("Developed by: Your Name \n");
+    printf("Website: %shttps://ctodo.io%s\n",UNDERLINE,RESET);
 }
