@@ -18,7 +18,7 @@ const config = {
       },
     },
     extend: {
-      fontFamily: { pops: ["var(--font-poppins)"] },
+      fontFamily: { pops: ["var(--font-poppins)"],fira: ["var(--font-fira)"] },
       colors: {
         highlight: "var(--highlight)",
         border: "hsl(var(--border))",
