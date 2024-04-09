@@ -5,14 +5,14 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const poppins = Poppins({
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600","700","800"],
   subsets: ["latin"],
   display: "swap",
   style: "normal",
   variable: "--font-poppins",
 });
 const fira = Fira_Code({
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600","700"],
   subsets: ["latin"],
   display: "swap",
   style: "normal",

@@ -62,7 +62,7 @@ export default function Home() {
               <span className="w-4 h-4 bg-red-600 rounded-full hover:bg-red-700"></span>
             </div>
             <div className="flex gap-2 items-center px-4 py-2">
-              <DollarSign className="h-5 w-5" />
+              <DollarSign className="h-5 w-5" color="white" />
               <TypeAnimation
                 sequence={[
                   "ctodo login",
@@ -77,8 +77,6 @@ export default function Home() {
                   1000,
                   "ctodo done 1",
                   1000,
-                  "ctodo fetch",
-                  1000,
                   "ctodo sync",
                   1000,
                   "ctodo logout",
@@ -88,8 +86,8 @@ export default function Home() {
                 speed={50}
                 style={{
                   fontSize: "20px",
-                  display: "",
                   fontFamily: "Fira Code",
+                  color: "white",
                 }}
                 repeat={Infinity}
               />
