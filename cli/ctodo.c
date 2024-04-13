@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
         int index = atoi(argv[2]);
         markUndone(index);
     }
-    
+
     else if (strcmp(argv[1], "help") == 0)
     {
         printUsage();
