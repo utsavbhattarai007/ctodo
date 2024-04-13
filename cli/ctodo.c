@@ -38,9 +38,7 @@ void listTasks(bool showTime);
 void printUsage();
 void loadTasks();
 void saveTasks();
-void user();
 void aboutus();
-int login(const char *apikey);
 
 int main(int argc, char *argv[])
 {
@@ -97,28 +95,7 @@ int main(int argc, char *argv[])
         int index = atoi(argv[2]);
         markUndone(index);
     }
-    else if (strcmp(argv[1], "login") == 0)
-    {
-        if (argc < 2)
-        {
-            printf("\n%sError: Invalid arguments for login command%s\n", BOLD, RESET);
-            printUsage();
-            return 1;
-        }
-        char apikey[100];
-        printf("Enter the API key: ");
-        scanf("%s", apikey);
-        system("clear");
-        login(apikey) ? printf("\n%sLogin failed%s\n", RED, RESET) : printf("\n%sLogin successful%s\n", GREEN, RESET);
-    }
-    else if (strcmp(argv[1], "user") == 0)
-    {
-        user();
-    }
-    else if (strcmp(argv[1], "aboutus") == 0)
-    {
-        aboutus();
-    }
+    
     else if (strcmp(argv[1], "help") == 0)
     {
         printUsage();
@@ -261,12 +238,10 @@ void printUsage()
 {
     printf("\nUsage: todo <command>\n");
     printf("Commands:\n");
-    printf("  login                Login to console\n");
     printf("  add <description>    Add a new task\n");
     printf("  delete <index>       Delete the task at the specified index\n");
     printf("  done <index>         Update the status of the task at the specified index\n");
     printf("  list [-t]            List all tasks\n");
-    printf("  user                 Fetch the user details\n");
     printf("  help                 Print usage\n");
 }
 
@@ -297,15 +272,9 @@ void markUndone(int index){
 
 }
 
-void user()
-{
-    // Get the user Data
-}
-
 void aboutus()
 {
     printf("\n📝 %sWelcome to Ctodo - Your Command Line Todo App%s \n",BOLD,RESET);
     printf("\nVersion: 1.0 \n");
     printf("Developed by: Your Name \n");
-    printf("Website: %shttps://ctodo.io%s\n",UNDERLINE,RESET);
 }
