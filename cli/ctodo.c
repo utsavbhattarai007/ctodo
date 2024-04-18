@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include <curl/curl.h>
+
 
 #define MAX_TASKS 100
 #define MAX_TASK_LENGTH 100
@@ -114,6 +114,16 @@ int main(int argc, char *argv[])
         }
         int index = atoi(argv[2]);
         markDone(index);
+    }
+    else if (strcmp(argv[1], "aboutus") == 0)
+    {
+        if (argc != 2)
+        {
+            printf("\n%sError: Invalid arguments for aboutus command%s\n", BOLD, RESET);
+            printUsage();
+            return 1;
+        }
+        aboutus();
     }
     else
     {
@@ -276,5 +286,5 @@ void aboutus()
 {
     printf("\n📝 %sWelcome to Ctodo - Your Command Line Todo App%s \n",BOLD,RESET);
     printf("\nVersion: 1.0 \n");
-    printf("Developed by: Your Name \n");
+    printf("Developed by: Utsav Bhattarai & Loblesh Bhartal \n");
 }
