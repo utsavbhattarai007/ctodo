@@ -10,7 +10,7 @@ To install Ctodo, follow these steps:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/ctodo.git
+    git clone https://github.com/utsavbhattarai007/ctodo
     ```
 
 2. Navigate to the project directory:
